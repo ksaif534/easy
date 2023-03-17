@@ -32,26 +32,26 @@ const CreateLearningSpace = () => {
                 <Col md={2} lg={2} sm={12} xs={12}></Col>
                 <Col md={8} lg={8} sm={12} xs={12}>
                     <Card style={{ width:'100%', marginTop:'20px' }}>
-                        <Card.Header style={{ textAlign: 'center', fontSize: '30px' }}>Learning Space Creation Form</Card.Header>
+                        <Card.Header style={{ textAlign: 'center', fontSize: '30px', fontFamily:'Raleway' }}><span style={{ fontWeight:'bold' }}>Learning Space Creation Form</span></Card.Header>
                         <Card.Body>
-                            <Form onSubmit={handleSubmit}>
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Title:</Form.Label>
+                            <Form onSubmit={handleSubmit} style={{ fontFamily:'Raleway', fontSize:'20px' }}>
+                                <Form.Group className="mb-3" style={{ marginBottom:'20px' }}>
+                                    <Form.Label><span style={{ fontWeight:'bold' }}>Title:</span></Form.Label>
                                     <Form.Control type="text" name="title" onChange={handleChange} placeholder="Enter Title" />
                                 </Form.Group>
-                                <Form.Group style={{ marginTop:'20px' }}>
-                                    <Form.Label>Number of Members:</Form.Label>
+                                <Form.Group style={{ marginBottom:'20px' }}>
+                                    <Form.Label><span style={{ fontWeight:'bold' }}>Number of Members:</span></Form.Label>
                                     <Form.Control type="text" name="numberOfMembers" onChange={handleChange} placeholder="Enter Member separated by a comma" />
                                 </Form.Group>
-                                <Form.Group style={{ marginTop:'20px' }}>
-                                    <Form.Label>Last Update:</Form.Label>
+                                <Form.Group style={{ marginBottom:'20px' }}>
+                                    <Form.Label><span style={{ fontWeight: 'bold' }}>Last Update:</span></Form.Label>
                                     <Form.Control type="date" name="lastUpdate" onChange={handleChange} placeholder="Enter Last Update"/>
                                 </Form.Group>
-                                <Form.Group style={{ marginTop:'20px' }}>
-                                    <Form.Label>Thumbnail:</Form.Label>
+                                <Form.Group style={{ marginBottom:'20px' }}>
+                                    <Form.Label><span style={{ fontWeight:'bold' }}>Thumbnail:</span></Form.Label>
                                     <FileBase type="file" multiple={false} onDone={({base64}) => setFormData({...formData,thumbnail:base64})} />
                                 </Form.Group>
-                                <Button style={{ marginTop:'20px', width:'100%' }} variant="outline-success" type="submit">Create Learning Space</Button>
+                                <Button style={{ width:'100%' }} variant="outline-success" type="submit">Create Learning Space</Button>
                             </Form>
                         </Card.Body>
                     </Card>

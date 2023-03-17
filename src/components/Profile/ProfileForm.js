@@ -3,15 +3,14 @@ import TagsInput from 'react-tagsinput';
 import { Container } from '@mui/system';
 import { MenuItem, Paper, Select, TextField, Button, Grid, Typography, FormControl } from '@mui/material';
 import { useState } from 'react';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 
-const ProfileForm = (props) => {
+const ProfileForm = () => {
     const [tags,setTags] = useState([]);
     const [file,setFile] = useState(null);
     const initState = {name: '', bio: '', country: '', interests: [], thumbnail: null};
     const [formData,setFormData] = useState(initState);
-    const [data,setData] = useState([]);
 
     const handleChange = (e) => {
         setFormData({...formData,[e.target.name]:e.target.value});
@@ -21,26 +20,21 @@ const ProfileForm = (props) => {
         setFile(e.target.files[0]);
     }
 
-    const handleFetchData = async (e) => {
-        e.preventDefault();
-        const response  = await getDocs(collection(db,"userProfiles"));
-        props.renderData(response);
-    }
-
     const handleFormSubmit = async (e) => {
-      e.preventDefault();
-      let formInput = {
-        name: formData.name,
-        bio: formData.bio,
-        country: formData.country,
-        interests: tags,
-        thumbnail: file.name
-      };
-      try {
-        const docRef = await addDoc(collection(db,"userProfiles"),formInput);
-      } catch (error) {
-        console.log(`Error Adding Document: ${error}`);  
-      }
+        e.preventDefault();
+        //For Firebase Storage
+        let formInput = {
+            name: formData.name,
+            bio: formData.bio,
+            country: formData.country,
+            interests: tags,
+            thumbnail: file.name
+        };
+        try {
+            const docRef = await addDoc(collection(db,"userProfiles"),formInput);
+        } catch (error) {
+            console.log(`Error Adding Document: ${error}`);  
+        }
     }
 
     return (
@@ -91,8 +85,7 @@ const ProfileForm = (props) => {
                         </Grid>
                     </Grid>
                 </FormControl>
-                <Button variant="outlined" style={{ marginTop: 30, marginRight: 20, marginLeft: 20, width: '45%' }} onClick={handleFormSubmit}>Create Profile</Button>
-                <Button variant="outlined" style={{ marginTop: 30, marginRight: 20, marginLeft: 20, width: '45%' }} onClick={handleFetchData}>Fetch Profiles</Button>
+                <Button variant="outlined" style={{ marginTop: '30px', marginRight: '20px', marginLeft: '20px', width: 'auto' }} onClick={handleFormSubmit}>Create Profile</Button>
             </Paper>
         </Container>
     )

@@ -26,8 +26,8 @@ const NavBar = () => {
         setValue(e.target.value);
     }
 
-    const handleProfile = () => {
-        navigate('/profile');
+    const handleProfiles = () => {
+        navigate('/profiles');
     }
 
     const handleLearningSpace = () => {
@@ -39,7 +39,7 @@ const NavBar = () => {
         style={{ display: 'flex', flexDirection: 'row', margin: '20px 0', borderRadius: 15}}>
             <Toolbar style={{ display: 'flex', justifyContent: 'flex-start', width: '50%'}}>
                 <div style={{ display: 'flex', width: '100%'}}>
-                    <Typography variant="h5">Saif Kamal</Typography>
+                    <Typography variant="h5" style={{ fontFamily:'Raleway' }}>Saif Kamal</Typography>
                 </div>
             </Toolbar>
             <Toolbar style={{ display: 'flex', justifyContent: 'flex-end', width: '50%'}}>
@@ -52,9 +52,9 @@ const NavBar = () => {
                     onChange={handleChange}
                     value={value}
                     >
-                        <MenuItem value="Profile" onClick={handleProfile}>Profile</MenuItem>
-                        <MenuItem value="Create Learning Space" onClick={handleLearningSpace}>Create Learning Space</MenuItem>
-                        <MenuItem value="Logout" onClick={handleLogout}>Logout</MenuItem>
+                        <MenuItem value="Profile" onClick={handleProfiles} style={{ fontFamily: 'Raleway' }}>Profile</MenuItem>
+                        <MenuItem value="Create Learning Space" onClick={handleLearningSpace} style={{ fontFamily: 'Raleway' }}>Create Learning Space</MenuItem>
+                        <MenuItem value="Logout" onClick={handleLogout} style={{ fontFamily: 'Raleway' }}>Logout</MenuItem>
                     </Select>
                 </FormControl>
             </Toolbar>

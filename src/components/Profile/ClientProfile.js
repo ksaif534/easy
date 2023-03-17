@@ -1,109 +1,67 @@
-import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
-import 'react-tagsinput/react-tagsinput.css';
-import ProfileForm from './ProfileForm';
-import { useState } from 'react';
-import Saif from '../../images/saif.jpeg';
+import { useParams } from 'react-router-dom';
+import { Grid, Card, CardContent, Typography } from '@mui/material';
+import { app,db } from '../../firebase-config';
+import { collection,getDocs } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 
 const ClientProfile = () => {
+    const param = useParams();
+    const [profile,setProfile] = useState(null);
 
-    const [data,setData] = useState([]);
-
-    const fetchData = (response) => {
-        response.forEach((doc) => {
-            setData(data.push(JSON.parse(JSON.stringify(doc.data()))));
-        })
-        console.log(data);
-    }
+    useEffect(() => {
+        const fetchData = async () => {
+            const query = await getDocs(collection(db,"userProfiles"));
+            query.forEach((doc) => {
+                const response = JSON.parse(JSON.stringify(doc.data()));
+                if (doc.id === param.profileId) {
+                    setProfile(response);
+                }
+            });
+        }
+        fetchData();
+    },[param]);
 
     return (
-        <div>
-            <Grid container spacing={2}>
-                <Grid item md={1}></Grid>
-                <Grid item md={10}>
-                    {
-                        (data.length > 0) ? 
-                            data.map(item => {
-                                <>
-                                    <Card elevation={6} style={{ display:'flex', flexDirection:'row', borderRadius: '20px', margin: 20, height: '100%' }}>
-                                        <CardMedia image={item.thumbnail} component='img' />
-                                        <CardContent>
-                                            <Grid container spacing={2}>
-                                                <Grid item md={6}>
-                                                    <Typography variant="h5">Name:</Typography>
-                                                </Grid>
-                                                <Grid item md={6}>
-                                                    <Typography variant="h5">{item.name}</Typography>
-                                                </Grid>
-                                                <Grid item md={6}>
-                                                    <Typography variant="h5">Biography:</Typography>
-                                                </Grid>
-                                                <Grid item md={6}>
-                                                    <Typography variant="h6">{item.bio}</Typography>
-                                                </Grid>
-                                                <Grid item md={6}>
-                                                    <Typography variant="h5">Country of Residence:</Typography>
-                                                </Grid>
-                                                <Grid item md={6}>
-                                                    <Typography variant="h5">{item.country}</Typography>
-                                                </Grid>
-                                                <Grid item md={6}>
-                                                    <Typography variant="h5">Interests:</Typography>
-                                                </Grid>
-                                                <Grid item md={6}>
-                                                    <Typography variant="h5">
-                                                        {
-                                                            item.interests.map(element => element)
-                                                        }
-                                                    </Typography>
-                                                </Grid>
-                                            </Grid>
-                                        </CardContent>
-                                    </Card>
-                                </>
-                            })
-                            :
-                            <>
-                                <Card elevation={6} style={{ display:'flex', flexDirection:'row', borderRadius: '20px', margin: 20, height: '100%' }}>
-                                    <CardMedia image={Saif} component='img' />
-                                    <CardContent>
-                                        <Grid container spacing={2}>
-                                            <Grid item md={6}>
-                                                <Typography variant="h5">Name:</Typography>
-                                            </Grid>
-                                            <Grid item md={6}>
-                                                <Typography variant="h5">Saif Kamal</Typography>
-                                            </Grid>
-                                            <Grid item md={6}>
-                                                <Typography variant="h5">Biography:</Typography>
-                                            </Grid>
-                                            <Grid item md={6}>
-                                                <Typography variant="h6">Hi I'm Saif. I'm a passionate software developer with a deep passion to learn new technologies & build new projects.</Typography>
-                                            </Grid>
-                                            <Grid item md={6}>
-                                                <Typography variant="h5">Country of Residence:</Typography>
-                                            </Grid>
-                                            <Grid item md={6}>
-                                                <Typography variant="h5">Bangladesh</Typography>
-                                            </Grid>
-                                            <Grid item md={6}>
-                                                <Typography variant="h5">Interests:</Typography>
-                                            </Grid>
-                                            <Grid item md={6}>
-                                                <Typography variant="h5">
-                                                    #JS#PHP#Python
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </CardContent>
-                                </Card>
-                            </>
-                    }
-                </Grid>
-                <Grid item md={1}></Grid>
+        <Grid container spacing={2} style={{ marginTop:'20px' }}>
+            <Grid item md={1}></Grid>
+            <Grid item md={10}>
+                <Card elevation={6} style={{ display: 'flex', flexDriction:'row', borderRadius: '20px', maringTop: '20px', height: '100%' }}>
+                    <CardContent>
+                        <Grid container spacing={2} style={{ marginTop:'10px' }}>
+                            <Grid item md={12}>
+                                <Typography style={{ fontSize: '30px', fontFamily:'Raleway' }}><span style={{ fontWeight: 'bold', marginRight:'10px' }}>Name:</span><span style={{ fontSize:'20px' }}>{profile?.name}</span></Typography>
+                            </Grid>
+                            <Grid item md={12}>
+                                <Typography style={{ fontSize:'30px', fontFamily:'Raleway' }}><span style={{ fontWeight:'bold', marginRight:'10px' }}>Country:</span><span style={{ fontSize:'20px' }}>{profile?.country}</span></Typography>
+                            </Grid>
+                            <Grid item md={12}>
+                                <Typography style={{ fontSize:'30px', fontFamily:'Raleway' }}><span style={{ fontWeight:'bold', marginRight:'10px' }}>Bio:</span><span style={{ fontSize:'20px' }}>{profile?.bio}</span></Typography>
+                            </Grid>
+                            <Grid item md={12}>
+                                <Typography style={{ fontSize:'30px', fontFamily:'Raleway' }}>
+                                    <span style={{ fontWeight:'bold', marginBottom:'10px' }}>Interests:</span>
+                                </Typography>
+                                <ul style={{ fontFamily:'Raleway', fontSize:'20px' }}>
+                                    {
+                                        profile?.interests.map((interest,index) => 
+                                            (
+                                                <>
+                                                    <li key={index}>
+                                                        {interest}
+                                                    </li>
+                                                </>
+                                            )
+                                        )
+                                    }
+                                </ul>
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                </Card>
             </Grid>
-            <ProfileForm renderData={fetchData} />
-        </div>
+            <Grid item md={1}></Grid>
+        </Grid>
     )
 }
 
-export default ClientProfile;
+export default ClientProfile

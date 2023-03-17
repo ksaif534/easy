@@ -38,8 +38,8 @@ const LogIn = ({title}) => {
                 </div>
                 <FormControl
                 component="form"
-                noValidate
                 autoComplete="off"
+                noValidate
                 >
                     <Grid container spacing={2} style={{ marginTop: 10 }}>
                         <Grid item md={6} lg={6}>
@@ -52,9 +52,7 @@ const LogIn = ({title}) => {
                             <Typography variant="h4">Password:</Typography>
                         </Grid>
                         <Grid item md={6} lg={6}>
-                            <TextField id="password" variant="filled" placeholder="Enter Password" style={{ width: '100%' }} onChange={(e) => setPassword(e.target.value)}>
-                                
-                            </TextField>
+                            <TextField id="password" variant="filled" placeholder="Enter Password" style={{ width: '100%' }} onChange={(e) => setPassword(e.target.value)} />
                         </Grid>
                     </Grid>
                     <Button variant="outlined" style={{ margin: 15, width: '100%' }} onClick={handleSubmit}>Log In</Button>

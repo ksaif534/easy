@@ -41,13 +41,12 @@ const LearningSpaces = () => {
           {
             learningSpaces.map((doc) => (
               <Col key={doc._id} md={4} lg={4} sm={6} xs={12}>
-                <Card style={{ width:'18rem', marginLeft: '20px' }} onClick={() => handleClick(doc)}>
-                  <Card.Header style={{ textAlign: 'center' }}>Co-learning Space {doc._id}</Card.Header>
+                <Card style={{ width:'auto', marginLeft: '20px', marginBottom: '20px', fontFamily:'Raleway' }} onClick={() => handleClick(doc)}>
+                  <Card.Header style={{ textAlign: 'center', fontWeight:'bold' }}>Co-learning Space {doc._id}</Card.Header>
                   <Card.Img variant="top" src={doc?.thumbnail} />
                   <Card.Body>
                     <ListGroup variant="flush">
-                      <ListGroup.Item style={{ textAlign: 'center' }}>Title: {doc.title}
-                      </ListGroup.Item>
+                      <ListGroup.Item style={{ textAlign: 'center' }}>Title: {doc.title}</ListGroup.Item>
                       <ListGroup.Item style={{ textAlign: 'center' }}>Number of Members: {doc.numberOfMembers} </ListGroup.Item>
                       <ListGroup.Item style={{ textAlign: 'center' }}>Last Update: {doc.lastUpdate}</ListGroup.Item>
                     </ListGroup>
