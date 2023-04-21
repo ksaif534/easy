@@ -2,12 +2,16 @@ import mongoose from 'mongoose';
 
 const learningSpaceSchema = mongoose.Schema({
     title: String,
-    numberOfMembers: Number | String,
+    numberOfMembers: {
+        type: mongoose.Schema.Types.Mixed
+    },
     lastUpdate: {
         type: Date,
         default: new Date()
     },
-    thumbnail: Object | String
+    thumbnail: {
+        type: mongoose.Schema.Types.Mixed
+    }
 })
 
 const learningSpace = mongoose.model('learningSpaces',learningSpaceSchema);

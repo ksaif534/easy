@@ -36,7 +36,7 @@ const NavBar = () => {
 
     return (
         <AppBar position="static" color="inherit"
-        style={{ display: 'flex', flexDirection: 'row', margin: '20px 0', borderRadius: 15}}>
+        style={{ display: 'flex', flexDirection: 'row', margin: '20px 0', borderRadius: 15 }}>
             <Toolbar style={{ display: 'flex', justifyContent: 'flex-start', width: '50%'}}>
                 <div style={{ display: 'flex', width: '100%'}}>
                     <Typography variant="h5" style={{ fontFamily:'Raleway' }}>Saif Kamal</Typography>
@@ -46,7 +46,7 @@ const NavBar = () => {
                 <Avatar src={Saif} />
                 <FormControl style={{ display: 'flex', padding: '10px', margin: '10px' }}> 
                     <Select
-                    variant="filled"
+                    variant="outlined"
                     onOpen={handleOpen}
                     onClose={handleClose}
                     onChange={handleChange}

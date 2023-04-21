@@ -29,9 +29,7 @@ const SignUp = ({title}) => {
         <Container component="main" maxWidth="md">
             <Paper elevation={6} style={{ marginTop: 50, marginBottom: 50, padding: 50, borderRadius: 15 }}>
                 <div style={{ display:'flex', justifyContent: 'center' }}>
-                    <div style={{ backgroundColor: 'gray', borderRadius: '50%', width: 'auto' }}>
-                        <LockOutlinedIcon fontSize="large" style={{ color:'white' }} />
-                    </div>
+                    <LockOutlinedIcon fontSize="large" style={{ color:'black' }} />
                     <Typography variant="h4">{title}</Typography>
                 </div>
                 <FormControl
@@ -41,25 +39,25 @@ const SignUp = ({title}) => {
                 >
                     <Grid container spacing={2} style={{ marginTop: 10 }}>
                         <Grid item md={6} lg={6}>
-                            <Typography variant="h5" style={{ margin: 5 }}>Name:</Typography>
+                            <Typography variant="h4" style={{ margin: 5 }}>Name:</Typography>
                         </Grid>
                         <Grid item md={6} lg={6}>
-                            <TextField id="name" variant="filled" placeholder="Enter Name" style={{ margin: 5, width: '100%' }} />
+                            <TextField id="name" variant="outlined" placeholder="Enter Name" style={{ margin: 5, width: '100%' }} />
                         </Grid>
                         <Grid item md={6} lg={6}>
-                            <Typography variant="h5" style={{ margin: 5 }}>Email:</Typography>
+                            <Typography variant="h4" style={{ margin: 5 }}>Email:</Typography>
                         </Grid>
                         <Grid item md={6} lg={6}>
-                            <TextField id="email" variant="filled" placeholder="Enter Email" style={{ margin: 5, width: '100%' }} onChange={(e) => setEmail(e.target.value)} />
+                            <TextField id="email" variant="outlined" placeholder="Enter Email" style={{ margin: 5, width: '100%' }} onChange={(e) => setEmail(e.target.value)} />
                         </Grid>
                         <Grid item md={6} lg={6}>
-                            <Typography variant="h5" style={{ margin: 5 }}>Password:</Typography>
+                            <Typography variant="h4" style={{ margin: 5 }}>Password:</Typography>
                         </Grid>
                         <Grid item md={6} lg={6}>
-                            <TextField variant="filled" placeholder="Enter Password" style={{ margin: 5, width: '100%' }} onChange={(e) => setPassword(e.target.value)}></TextField>
+                            <TextField variant="outlined" placeholder="Enter Password" style={{ margin: 5, width: '100%' }} onChange={(e) => setPassword(e.target.value)}></TextField>
                         </Grid>
                     </Grid>
-                    <Button variant="outlined" type="submit" style={{ margin: 15, width: '100%' }} onClick={handleSubmit}>Sign Up</Button>
+                    <Button variant="contained" color="success" type="submit" style={{ marginTop:'30px', width: 'auto' }} onClick={handleSubmit}>Sign Up</Button>
                     <ToastContainer />
                 </FormControl>
             </Paper>

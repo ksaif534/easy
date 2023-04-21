@@ -31,9 +31,7 @@ const LogIn = ({title}) => {
         <Container component="main" maxWidth="md">
             <Paper elevation={6} style={{ marginTop: 50, marginBottom: 50, padding: 50, borderRadius: 15 }}>
                 <div style={{ display:'flex', justifyContent: 'center' }}>
-                    <div style={{ backgroundColor: 'gray', borderRadius: '50%', width: 'auto' }}>
-                        <LockOutlinedIcon fontSize="large" style={{ color:'white' }} />
-                    </div>
+                    <LockOutlinedIcon fontSize="large" style={{ color:'black' }} />
                     <Typography variant="h4">{title}</Typography>
                 </div>
                 <FormControl
@@ -46,16 +44,16 @@ const LogIn = ({title}) => {
                             <Typography variant="h4">Email:</Typography>
                         </Grid>
                         <Grid item md={6} lg={6}>
-                            <TextField id="email" variant="filled" placeholder="Enter Email" style={{ width: '100%' }} onChange={(e) => setEmail(e.target.value)} />
+                            <TextField id="email" variant="outlined" placeholder="Enter Email" style={{ width: '100%' }} onChange={(e) => setEmail(e.target.value)} />
                         </Grid>
                         <Grid item md={6} lg={6}>
                             <Typography variant="h4">Password:</Typography>
                         </Grid>
                         <Grid item md={6} lg={6}>
-                            <TextField id="password" variant="filled" placeholder="Enter Password" style={{ width: '100%' }} onChange={(e) => setPassword(e.target.value)} />
+                            <TextField id="password" variant="outlined" placeholder="Enter Password" style={{ width: '100%' }} onChange={(e) => setPassword(e.target.value)} />
                         </Grid>
                     </Grid>
-                    <Button variant="outlined" style={{ margin: 15, width: '100%' }} onClick={handleSubmit}>Log In</Button>
+                    <Button variant="contained" color="success" style={{ margin: '30px', width: 'auto' }} onClick={handleSubmit}>Log In</Button>
                     <ToastContainer />
                 </FormControl>
             </Paper>

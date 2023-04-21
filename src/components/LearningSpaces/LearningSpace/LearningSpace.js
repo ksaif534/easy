@@ -1,23 +1,21 @@
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import ListGroup  from 'react-bootstrap/ListGroup';
-import Button from 'react-bootstrap/Button';
+
+import { Card, Container, Button, Typography, Grid, CardMedia, CardContent, List, ListItem, ListItemButton, ListItemText, Collapse, ListItemIcon } from '@mui/material';
+import { StarBorder, ExpandLess, ExpandMore } from '@mui/icons-material';
 import {useParams} from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {getLearningSpace} from '../../../actions/learningSpaces';
+import { getLearningSpace } from '../../../actions/learningSpaces';
 import { useNavigate } from 'react-router-dom';
 import { app,db } from '../../../firebase-config';
 import { collection,getDocs } from 'firebase/firestore';
-import {fetchPosts} from '../../../actions/posts';
+import { fetchPosts } from '../../../actions/posts';
 
 const LearningSpace = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const authCheck = sessionStorage.getItem('Auth Token');
+  const [open,setOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,69 +48,79 @@ const LearningSpace = () => {
     navigate(`/learning-spaces/learning-space/${params.id}/posts/create-post`);
   }
 
+  const handleClick = () => {
+    setOpen(!open);
+  }
+
   return (
-    <>
-      <Container fluid style={{ marginTop:'10px', marginBottom: '20px' }}>
-        <Row>
-          <Col md={1} lg={1} sm={12} xs={12}></Col>
-          <Col key={learningSpace?._id} md={10} lg={10} sm={12} xs={12}>
-            <Card style={{ marginTop: '20px' }}>
-              <Card.Header style={{ textAlign: 'center', fontWeight:'bold' }}>Co-Learing Space {learningSpace?._id}</Card.Header>
-              <Card.Img variant="top" src={learningSpace?.thumbnail} />
-              <Card.Body>
-                <ListGroup style={{ textAlign: 'center', fontSize: '30px', marginBottom: '20px', fontFamily: 'Raleway'}} variant="flush">
-                  <ListGroup.Item>
-                    <span style={{ fontWeight: 'bold' }}>Title:</span> { learningSpace?.title }
+    <Container component="main" maxWidth="lg">
+      <Grid container spacing={2} style={{ marginTop: '20px', marginBottom: '20px' }}>
+        <Grid item md={1} lg={1}></Grid>
+        <Grid item md={10} lg={10}>
+          <Card elevation={6} style={{ marginTop: '10px' }}>
+            <CardMedia
+            component='img'
+            image={learningSpace?.thumbnail}
+            height="500"
+            alt="Image"
+            />
+            <CardContent>
+              <List>
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <Typography variant="h5">Title:</Typography>
+                    <ListItemText primary={learningSpace?.title} style={{ marginLeft:'10px' }} />
                     {
                       authCheck && (
-                        <>
-                          <Button variant="outline-primary" style={{ marginLeft: '20px' }}>Join</Button>
-                        </>
+                        <Button variant="outlined">Join</Button>
                       )
                     }
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <span style={{ fontWeight: 'bold' }}>Number of Members:</span> { learningSpace?.numberOfMembers }
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <span style={{ fontWeight: 'bold' }}>Last Update:</span> { learningSpace?.lastUpdate }
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <span style={{ fontWeight:'bold' }}>Prerequisites:</span> N/A
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <span style={{ fontWeight:'bold', marginRight: '20px' }}>
-                      Posts:
-                    </span>
-                    <Button variant="outline-success" style={{ marginBottom:'5px' }} onClick={createPost}>Create a Post</Button>
-                    <ListGroup style={{ textAlign: 'center', fontSize: '20px', marginBottom: '10px' }} variant="flush">
-                      {
-                        posts.map((post) => (
-                          <>
-                            <ListGroup.Item style={{ marginBottom: '10px', marginTop:'5px' }} key={post._id}>{post.title}</ListGroup.Item>
-                          </>
-                        ))
-                      }
-                    </ListGroup>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <span style={{ fontWeight: 'bold' }}>Active Users:</span>
-                    <ListGroup style={{ textAlign: 'center', fontSize: '20px', marginBottom: '10px'}} variant="flush">
-                      <ListGroup.Item onClick={getItemProfile} style={{ marginBottom:'10px', marginTop:'5px' }}>Saif Kamal</ListGroup.Item>
-                    </ListGroup>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <span style={{ fontWeight:'bold' }}>Related Learning Spaces:</span>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={1} lg={1} sm={12} xs={12}></Col>
-        </Row>
-      </Container>
-    </>
-  )
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <Typography variant="h5">Number of Members:</Typography>
+                    <ListItemText primary={learningSpace?.numberOfMembers} style={{ marginLeft:'10px' }} />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <Typography variant="h5">Last Update:</Typography>
+                    <ListItemText primary={learningSpace?.lastUpdate} style={{ marginLeft:'10px' }}></ListItemText>
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                      <Typography variant="h5">Prerequisites:</Typography>
+                      <ListItemText primary="N/A" style={{ marginLeft:'10px' }}></ListItemText>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton onClick={handleClick}>
+                      <Typography variant="h5">Posts:</Typography>
+                      { open ? <ExpandLess /> : <ExpandMore /> }
+                      <Button variant="outlined">Create Post</Button>
+                    </ListItemButton>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                      <List component="div" disablePadding>
+                        <ListItemButton sx={{ pl:4 }}>
+                          {
+                            posts.map((post) => (
+                              <ListItemText key={post._id} primary={post?.title} />
+                            ))
+                          }
+                        </ListItemButton>
+                      </List>
+                    </Collapse>
+                </ListItem>
+              </List>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item md={1} lg={1}></Grid>
+      </Grid>
+    </Container>
+  )  
 }
 
 export default LearningSpace

@@ -1,12 +1,8 @@
-import Card  from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
+import { Card, CardHeader ,CardMedia, CardActionArea, CardContent, Typography, Container, Paper, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLearningSpaces } from '../../actions/learningSpaces';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 const LearningSpaces = () => {
 
@@ -33,32 +29,37 @@ const LearningSpaces = () => {
     return 'No Learning Spaces Available';
   }
 
-  if (learningSpaces?.length) {
+  if(learningSpaces?.length){
     return (
-      <>
-        <Container fluid>
-          <Row>
-          {
-            learningSpaces.map((doc) => (
-              <Col key={doc._id} md={4} lg={4} sm={6} xs={12}>
-                <Card style={{ width:'auto', marginLeft: '20px', marginBottom: '20px', fontFamily:'Raleway' }} onClick={() => handleClick(doc)}>
-                  <Card.Header style={{ textAlign: 'center', fontWeight:'bold' }}>Co-learning Space {doc._id}</Card.Header>
-                  <Card.Img variant="top" src={doc?.thumbnail} />
-                  <Card.Body>
-                    <ListGroup variant="flush">
-                      <ListGroup.Item style={{ textAlign: 'center' }}>Title: {doc.title}</ListGroup.Item>
-                      <ListGroup.Item style={{ textAlign: 'center' }}>Number of Members: {doc.numberOfMembers} </ListGroup.Item>
-                      <ListGroup.Item style={{ textAlign: 'center' }}>Last Update: {doc.lastUpdate}</ListGroup.Item>
-                    </ListGroup>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))
-          }
-          </Row>
-        </Container>
-      </>
-    ) 
+      <Container component="main" maxWidth="lg">
+        <Grid container spacing={2} style={{ marginTop:'20px', marginBottom:'20px' }}>
+        {
+          learningSpaces.map((learningSpace) => (
+            <Grid key={learningSpace._id} item md={4} lg={4}>
+              <Card elevation={6} style={{ marginTop: '20px' }}>
+                <CardMedia 
+                component="img"
+                image={learningSpace?.thumbnail}
+                height="300"
+                alt="Card Image"
+                />
+                <CardHeader 
+                title={learningSpace?.title}
+                />
+                <CardActionArea onClick={() => handleClick(learningSpace)}>
+                  <CardContent>
+                    <Typography variant="body1" color="text.secondary" style={{ marginTop:'20px' }}>
+                      Number of Members: {learningSpace?.numberOfMembers}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))
+        }
+        </Grid>
+      </Container>
+    )
   }
 }
 

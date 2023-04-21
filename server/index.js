@@ -20,6 +20,5 @@ app.use(`/learning-spaces/learning-space/:id/posts`,postRoutes);
 mongoose.connect(process.env.LOCAL_CONNECTION)
     .then(() => morgan('common'))
     .catch((err) => console.log(err));
-mongoose.set('strictQuery',true);
 
 app.listen(process.env.PORT,() => console.log(`Server Connection on Port:${process.env.PORT}`));
